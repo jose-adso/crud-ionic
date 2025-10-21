@@ -1,27 +1,89 @@
-#container {
-  text-align: center;
+/* Estilos Bootstrap personalizados para Home (CRUD de estudiantes) */
+/* Utiliza clases de Bootstrap incluidas en index.html; aquí añadimos ajustes visuales específicos */
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+:host {
+  display: block;
+  padding: 0;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.student-register-wrapper {
+  margin: 0 auto 1.5rem auto;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+.card-title {
+  font-weight: 600;
+  color: #222;
 }
 
-#container a {
-  text-decoration: none;
+/* Ajustes de formulario */
+.form-label {
+  font-weight: 500;
+  color: #495057;
+}
+
+.card .card-body {
+  padding: 1.25rem;
+}
+
+/* Mensajes */
+.alert {
+  margin-top: .5rem;
+  margin-bottom: .75rem;
+}
+
+/* Tabla de usuarios */
+.table {
+  margin-bottom: 0;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+/* Botones */
+.btn-sm {
+  padding: .25rem .5rem;
+  font-size: .85rem;
+}
+
+.d-grid .btn {
+  padding: .5rem 1rem;
+}
+
+/* Zona de edición */
+.editing-area {
+  margin-bottom: 1rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .ion-buttons-end {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: .5rem;
+  }
+}
+
+/* Suavizar sombras */
+.shadow-sm {
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06) !important;
+}
+
+/* Separación entre columnas en pantallas grandes */
+.row > .col-md-6 + .col-md-6 {
+  margin-top: 0;
+}
+
+/* Ajuste para que el botón logout luzca bien dentro de ion-toolbar */
+.ion-buttons-end .btn {
+  margin-top: 6px;
 }

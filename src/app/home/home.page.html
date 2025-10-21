@@ -1,20 +1,98 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+  <ion-toolbar class="d-flex align-items-center">
+    <ion-title>Home</ion-title>
+    <div class="ion-buttons-end ms-auto d-flex align-items-center">
+      <ion-button fill="clear" class="btn btn-sm btn-outline-secondary me-2" (click)="loadUsers()" title="Refrescar" type="button">
+        <i class="bi bi-arrow-clockwise"></i>
+        Refrescar
+      </ion-button>
+      <button class="btn btn-sm btn-danger" (click)="logout()" type="button">Cerrar sesión</button>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="py-3">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Home</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="container py-3">
+    <div class="row g-3">
+      <!-- Formulario de registro (usa ion-* pero con clases Bootstrap) -->
+      <div class="col-12 col-md-6">
+        <ion-card class="shadow-sm">
+          <ion-card-content>
+            <h5 class="card-title mb-3">Registrar estudiante</h5>
+            <form (ngSubmit)="registerStudent()">
+              <ion-list lines="none">
+                <ion-item class="mb-3">
+                  <ion-label position="stacked" class="form-label">Usuario</ion-label>
+                  <ion-input class="form-control" [(ngModel)]="username" name="username" required></ion-input>
+                </ion-item>
+
+                <ion-item class="mb-3">
+                  <ion-label position="stacked" class="form-label">Correo (opcional)</ion-label>
+                  <ion-input class="form-control" type="email" [(ngModel)]="email" name="email"></ion-input>
+                </ion-item>
+
+                <ion-item class="mb-3">
+                  <ion-label position="stacked" class="form-label">Contraseña</ion-label>
+                  <ion-input class="form-control" type="password" [(ngModel)]="password" name="password" required></ion-input>
+                </ion-item>
+              </ion-list>
+
+              <div *ngIf="message" class="alert alert-info">{{ message }}</div>
+
+              <div class="d-grid mt-2">
+                <ion-button class="btn btn-primary" type="submit" [disabled]="busy">{{ busy ? 'Registrando...' : 'Registrar estudiante' }}</ion-button>
+              </div>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- Listado y CRUD -->
+      <div class="col-12 col-md-6">
+        <ion-card class="shadow-sm">
+          <ion-card-content>
+            <h5 class="card-title mb-3">Lista de estudiantes</h5>
+
+            <div *ngIf="editingUser" class="mb-3 editing-area">
+              <h6>Editando: {{ originalEditingUsername }}</h6>
+              <ion-list lines="none">
+                <ion-item class="mb-2">
+                  <ion-input class="form-control mb-2" [(ngModel)]="editUsername" name="editUsername" placeholder="Usuario"></ion-input>
+                  <ion-input class="form-control mb-2" [(ngModel)]="editEmail" name="editEmail" placeholder="Correo"></ion-input>
+                  <ion-input class="form-control mb-2" type="password" [(ngModel)]="editPassword" name="editPassword" placeholder="Contraseña"></ion-input>
+                </ion-item>
+              </ion-list>
+              <div class="d-flex gap-2">
+                <ion-button class="btn btn-success btn-sm" (click)="saveEdit()" type="button">Guardar</ion-button>
+                <ion-button class="btn btn-secondary btn-sm" (click)="cancelEdit()" type="button">Cancelar</ion-button>
+              </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 g-3">
+              <div class="col" *ngFor="let u of users">
+                <ion-card class="h-100 shadow-sm">
+                  <ion-card-content>
+                    <h6 class="card-title mb-1">{{ u.username }}</h6>
+                    <p class="mb-2 text-muted">{{ u.email || '-' }}</p>
+                    <div class="d-flex justify-content-end gap-2">
+                      <ion-button fill="outline" class="btn btn-outline-primary btn-sm" (click)="startEdit(u)" type="button">Editar</ion-button>
+                      <ion-button fill="outline" class="btn btn-outline-danger btn-sm" (click)="deleteUser(u.username)" type="button">Eliminar</ion-button>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </div>
+            </div>
+
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
   </div>
+
 </ion-content>

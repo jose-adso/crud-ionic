@@ -1,0 +1,54 @@
+
+/* Estilos básicos para la página de login */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+ion-card {
+  width: 100%;
+  max-width: 420px;
+  margin-top: 40px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border-radius: 10px;
+}
+
+.help-link {
+  text-align: left;
+  margin: 8px 0 16px 0;
+  font-size: 0.95rem;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+/* Make buttons full width and spaced */
+ion-button {
+  width: 100%;
+  --border-radius: 6px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Small spacing for icons inside buttons */
+ion-button ion-icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  ion-card {
+    margin: 10px;
+    max-width: 100%;
+  }
+}

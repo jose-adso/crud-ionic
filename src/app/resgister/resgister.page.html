@@ -1,0 +1,63 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Register</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="register-wrapper">
+    <ion-card>
+      <ion-card-content>
+        <form (ngSubmit)="register()">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Usuario</ion-label>
+              <ion-input [(ngModel)]="username" name="username" required></ion-input>
+            </ion-item>
+            <div style="color:#d9534f;font-size:0.85rem;margin:6px 0 0 12px" *ngIf="username && username.length > 0 && username.length < 3">
+              El nombre de usuario debe tener al menos 3 caracteres.
+            </div>
+
+            <ion-item>
+              <ion-label position="floating">Correo (opcional)</ion-label>
+              <ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
+            </ion-item>
+            <div style="color:#d9534f;font-size:0.85rem;margin:6px 0 0 12px" *ngIf="email && email.length > 0 && email.indexOf('@') === -1">
+              Correo inválido. Debe contener '@'.
+            </div>
+
+            <ion-item>
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+            </ion-item>
+            <div style="color:#d9534f;font-size:0.85rem;margin:6px 0 0 12px" *ngIf="password && password.length > 0 && password.length < 6">
+              La contraseña debe tener al menos 6 caracteres.
+            </div>
+          </ion-list>
+
+          <div class="message" *ngIf="message">{{ message }}</div>
+
+          <div class="center">
+            <ion-button type="submit"
+                        [disabled]="busy || username.length < 3 || password.length < 6 || (email && email.length > 0 && email.indexOf('@') === -1)">
+              {{ busy ? 'Registrando...' : 'Registrarse' }}
+            </ion-button>
+          </div>
+
+          <div class="back-link" style="text-align:center;margin-top:12px;">
+            <ion-button fill="clear" color="medium" type="button" (click)="goToLogin()">
+              ← Regresar al inicio de sesión
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>

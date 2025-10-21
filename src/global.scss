@@ -1,3 +1,7 @@
+/* Import Bootstrap globally (via CDN). Using @import so styles are included in the build output.
+   If you prefer installing bootstrap via npm, replace this with: @import "~bootstrap/dist/css/bootstrap.min.css"; */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css');
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -35,3 +39,52 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* Global Bootstrap-compatible overrides and helpers to improve harmony between
+   Ionic components and Bootstrap utilities. Adjust to taste. */
+
+:root {
+  /* Map a primary color to Ionic variables so bootstrap utilities blend well */
+  --bs-primary: #c82333; /* red-ish to match existing danger color used in app */
+  --ion-color-primary: var(--bs-primary);
+}
+
+body {
+  /* Ensure Bootstrap base font sizing integrates with Ionic */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Utility: center cards like Bootstrap's container utilities */
+.app-container {
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* Example: make ion-card look more like a Bootstrap card */
+ion-card {
+  border: 0;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.06);
+}
+
+/* Form spacing tweaks to match Bootstrap form spacing */
+ion-item {
+  margin-bottom: 0.75rem;
+}
+
+/* Buttons: allow using Bootstrap utility colors while preserving Ionic styling */
+ion-button[fill="solid"] {
+  --background: transparent;
+  --background-activated: transparent;
+}
+
+/* Small responsive tweak */
+@media (max-width: 576px) {
+  .app-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
