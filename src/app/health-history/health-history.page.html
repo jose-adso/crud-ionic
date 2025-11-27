@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Historial de Salud</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Historial de Salud</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <p *ngIf="cows.length === 0" style="text-align: center; color: gray;">No hay vacas registradas. Registre vacas primero desde el menú.</p>
+
+  <ion-item *ngIf="cows.length > 0">
+    <ion-label>Seleccionar Vaca por Número de Registro</ion-label>
+    <ion-select [(ngModel)]="selectedCowId" (ionChange)="onCowChange()" placeholder="Seleccione una vaca">
+      <ion-select-option *ngFor="let cow of cows" [value]="cow.id">
+        {{ cow.registrationNumber }} - {{ cow.cowName }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div *ngIf="selectedCow">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Vaca Seleccionada: {{ selectedCow.cowName }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Número de Registro:</strong> {{ selectedCow.registrationNumber }}</p>
+        <p><strong>Raza:</strong> {{ selectedCow.breed }}</p>
+        <p><strong>Estado:</strong> {{ selectedCow.status === 'cargada' ? 'Cargada' : selectedCow.status === 'en seguimiento' ? 'En Seguimiento' : 'Sana' }}</p>
+        <p *ngIf="selectedCow.purgingDate"><strong>Fecha de Purga:</strong> {{ selectedCow.purgingDate | date:'dd/MM/yyyy' }}</p>
+        <p *ngIf="selectedCow.vaccinationDate"><strong>Fecha de Vacunación:</strong> {{ selectedCow.vaccinationDate | date:'dd/MM/yyyy' }}</p>
+        <p *ngIf="selectedCow.vaccines && selectedCow.vaccines.length > 0"><strong>Vacunas Aplicadas:</strong> {{ selectedCow.vaccines.join(', ') }}</p>
+        <p *ngIf="selectedCow.otherProblems"><strong>Otros Problemas:</strong> {{ selectedCow.otherProblems }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list *ngIf="healthHistory.length > 0">
+      <ion-item *ngFor="let record of healthHistory">
+        <ion-label>
+          <h2>{{ record.type === 'visita_veterinario' ? 'Visita Veterinario' : record.type === 'vacunacion' ? 'Vacunación' : record.type === 'tratamiento' ? 'Tratamiento' : 'Otro' }}</h2>
+          <p>{{ record.description }}</p>
+          <p *ngIf="record.details">{{ record.details }}</p>
+          <p><small>{{ record.date | date:'dd/MM/yyyy' }}</small></p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-item *ngIf="healthHistory.length === 0">
+      <ion-label>No hay registros de salud para esta vaca.</ion-label>
+    </ion-item>
+  </div>
+</ion-content>

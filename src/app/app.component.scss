@@ -1,0 +1,23 @@
+/* Root toolbar and menu styles for the farm theme */
+:host ion-header ion-toolbar {
+	background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+	color: var(--ion-color-primary-contrast);
+}
+
+.farm-toolbar ion-title {
+	color: black;
+}
+
+ion-menu {
+	--width: 240px;
+}
+
+ion-menu ion-content {
+	background: linear-gradient(180deg, #dff5dd, #d1efd2);
+}
+
+.menu-item ion-button {
+	--background: transparent;
+	color: var(--ion-color-tertiary);
+}
+

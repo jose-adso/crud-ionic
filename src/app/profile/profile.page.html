@@ -1,0 +1,61 @@
+<div class="ion-page" id="profile-content">
+  <ion-header>
+    <ion-toolbar class="farm-toolbar">
+      <ion-title>Perfil</ion-title>
+      <ion-buttons slot="end">
+        <ion-menu-button menu="main-menu"></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding farm-background">
+    <div *ngIf="user">
+      <ion-card>
+        <ion-card-content>
+          <div class="profile-photo-container">
+            <img [src]="user.photoURL || 'assets/icon/favicon.png'" alt="Foto de perfil" class="profile-photo">
+            <input type="file" accept="image/*" (change)="onPhotoChange($event)" style="margin-top: 10px;">
+          </div>
+
+          <ion-item>
+            <ion-label position="stacked">Usuario</ion-label>
+            <ion-input readonly [value]="user.username"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input type="email" [(ngModel)]="editEmail" placeholder="Ingresa tu email"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input type="password" [(ngModel)]="editPassword" placeholder="Ingresa tu contraseña"></ion-input>
+          </ion-item>
+
+          <ion-button expand="block" (click)="saveProfile()" [disabled]="busy" style="margin-top: 20px;">
+            <span *ngIf="busy">Guardando...</span>
+            <span *ngIf="!busy">Guardar Cambios</span>
+          </ion-button>
+
+          <ion-button expand="block" color="danger" (click)="logout()" style="margin-top: 10px;">
+            Cerrar Sesión
+          </ion-button>
+
+          <div *ngIf="message" class="message" [ngClass]="{'error': message.includes('Error') || message.includes('No se pudo'), 'success': message.includes('correctamente')}" style="color: red;">
+            {{ message }}
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div *ngIf="!user">
+      <ion-card>
+        <ion-card-content>
+          <p>No hay usuario autenticado.</p>
+          <ion-button expand="block" (click)="goToLogin()">
+            Ir al Login
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>
+</div>

@@ -1,2 +1,22 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+// Pasture (Pasto) theme variables for finca lechera
+// Colors tuned for a green, farm-like look
+:root {
+	--ion-color-primary: #2f8f34; /* grass green */
+	--ion-color-primary-contrast: #fff;
+	--ion-color-primary-shade: #267b2c;
+	--ion-color-primary-tint: #46aa50;
+
+	--ion-color-secondary: #7bbf59; /* light green */
+	--ion-color-tertiary: #154b18; /* dark green */
+
+	--ion-color-success: #6fcf68;
+	--ion-color-warning: #f6c84a;
+	--ion-color-danger: #e55353;
+
+	/* Backgrounds */
+	--page-background-top: #ecf9ea;
+	--page-background-bottom: #d7f0d8;
+
+	/* Accent */
+	--farm-accent: #f7f3d0; /* straw color */
+}

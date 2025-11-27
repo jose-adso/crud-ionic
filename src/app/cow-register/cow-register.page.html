@@ -1,0 +1,113 @@
+<div class="ion-page" id="cow-register-content">
+  <ion-header>
+    <ion-toolbar class="farm-toolbar">
+      <ion-title>{{ editingCow ? 'Editar Vaca' : 'Registrar Vaca' }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-menu-button menu="main-menu"></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding farm-background">
+    <div class="container">
+      <div class="card pasture-card">
+        <div class="card-body">
+        <ion-item>
+          <ion-label position="stacked">Nombre de la Vaca</ion-label>
+          <ion-input [(ngModel)]="cowName" placeholder="Ingresa el nombre"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Número de Registro</ion-label>
+          <ion-input [(ngModel)]="registrationNumber" placeholder="Ingresa el número"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Raza</ion-label>
+          <ion-input [(ngModel)]="breed" placeholder="Ingresa la raza"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Fecha de Compra</ion-label>
+          <ion-input type="date" [(ngModel)]="purchaseDate"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Estado</ion-label>
+          <ion-select [(ngModel)]="status">
+            <ion-select-option value="cargada">Cargada</ion-select-option>
+            <ion-select-option value="en seguimiento">En Seguimiento</ion-select-option>
+            <ion-select-option value="sana">Sana</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Día que se Insemina</ion-label>
+          <ion-input type="date" [(ngModel)]="inseminationDay"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Día que Dio Cría</ion-label>
+          <ion-input type="date" [(ngModel)]="birthDay"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Detalles de la Inseminación</ion-label>
+          <ion-input [(ngModel)]="inseminationBreed" placeholder="Ingresa la raza de inseminación"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Sexo de la Cría</ion-label>
+          <ion-select [(ngModel)]="calfSex">
+            <ion-select-option value="pendiente">Pendiente</ion-select-option>
+            <ion-select-option value="macho">Macho</ion-select-option>
+            <ion-select-option value="hembra">Hembra</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Foto de la Vaca</ion-label>
+          <input type="file" accept="image/*" (change)="onCowPhotoChange($event)" style="margin-top: 10px;">
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Foto del Ternero</ion-label>
+          <input type="file" accept="image/*" (change)="onCalfPhotoChange($event)" style="margin-top: 10px;">
+        </ion-item>
+<ion-item>
+  <ion-label position="stacked">Fecha de Venta (Opcional)</ion-label>
+  <ion-input type="date" [(ngModel)]="saleDate"></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="stacked">Fecha de Purga (Opcional)</ion-label>
+  <ion-input type="date" [(ngModel)]="purgingDate"></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="stacked">Fecha de Vacunación (Opcional)</ion-label>
+  <ion-input type="date" [(ngModel)]="vaccinationDate"></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="stacked">Vacunas Aplicadas (Separadas por coma, Opcional)</ion-label>
+  <ion-input [(ngModel)]="vaccines" placeholder="Ej: Vacuna A, Vacuna B"></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label position="stacked">Otros Problemas (Opcional)</ion-label>
+  <ion-input [(ngModel)]="otherProblems" placeholder="Describa otros problemas"></ion-input>
+</ion-item>
+
+<button class="btn btn-primary btn-block" (click)="registerCow()" [disabled]="busy" style="margin-top: 20px;">
+          <span *ngIf="busy">{{ editingCow ? 'Actualizando...' : 'Registrando...' }}</span>
+          <span *ngIf="!busy">{{ editingCow ? 'Actualizar Vaca' : 'Registrar Vaca' }}</span>
+        </button>
+
+        <div *ngIf="message" class="alert alert-danger" role="alert">
+          {{ message }}
+        </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</div>

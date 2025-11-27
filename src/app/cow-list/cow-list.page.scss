@@ -1,0 +1,36 @@
+/* Pasture style for the cow list */
+.list-group-item {
+	display: block;
+	background: linear-gradient(180deg, rgba(47,143,52,0.05), rgba(47,143,52,0.02));
+	border-left: 6px solid var(--ion-color-primary);
+	padding: 12px;
+	border-radius: 8px;
+	margin-bottom: 10px;
+}
+
+.cow-meta p {
+	margin: 0;
+	color: rgba(17,53,13,0.9);
+}
+
+.cow-actions {
+	margin-top: 8px;
+	display: flex;
+	gap: 8px;
+}
+
+.cow-avatar {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	object-fit: cover;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+	border: 3px solid rgba(255,255,255,0.6);
+}
+
+.btn-secondary {
+	background: linear-gradient(90deg, var(--ion-color-secondary), var(--ion-color-primary));
+	color: white;
+	border: none;
+}
+

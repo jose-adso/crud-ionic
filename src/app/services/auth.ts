@@ -5,6 +5,7 @@ export interface UserRecord {
   username: string;
   email?: string;
   password: string;
+  photoURL?: string;
 }
 
 @Injectable({
@@ -13,11 +14,14 @@ export interface UserRecord {
 export class Auth {
   private _authenticated = false;
   private STORAGE_KEY = 'mock_users';
+  private CURRENT_USER_KEY = 'current_user';
+  private currentUser: UserRecord | null = null;
 
   constructor() {
     // Al iniciar el servicio intentamos resolver un posible resultado de redirect
     // (si el usuario regresó desde un signInWithRedirect).
     this._handleRedirectResult();
+    this._loadCurrentUser();
   }
 
   private async _handleRedirectResult() {
@@ -32,15 +36,21 @@ export class Auth {
         const users = this._loadUsers();
         const found = email ? users.find(u => u.email === email) : undefined;
 
-        if (!found) {
+        let current: UserRecord;
+        if (found) {
+          current = found;
+        } else {
           const password = Math.random().toString(36).slice(-8);
-          const newUser: UserRecord = { username, email: email || undefined, password };
+          const newUser: UserRecord = { username, email: email || undefined, password, photoURL: user.photoURL ?? undefined };
           users.push(newUser);
           localStorage.setItem(this.STORAGE_KEY, JSON.stringify(users));
+          current = newUser;
         }
 
         // Marcar como autenticado localmente
         this._authenticated = true;
+        this.currentUser = current;
+        this._saveCurrentUser();
       }
     } catch (err) {
       // No es crítico — puede suceder si no hubo redirect pendiente
@@ -59,6 +69,8 @@ export class Auth {
         const found = users.find(u => u.username === username && u.password === password);
         if (found) {
           this._authenticated = true;
+          this.currentUser = found;
+          this._saveCurrentUser();
           resolve(true);
         } else {
           resolve(false);
@@ -204,14 +216,20 @@ export class Auth {
       const users = this._loadUsers();
       const found = users.find(u => u.email === email);
 
-      if (!found) {
+      let current: UserRecord;
+      if (found) {
+        current = found;
+      } else {
         const password = Math.random().toString(36).slice(-8);
-        const newUser: UserRecord = { username, email, password };
+        const newUser: UserRecord = { username, email, password, photoURL: user.photoURL ?? undefined };
         users.push(newUser);
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(users));
+        current = newUser;
       }
 
       this._authenticated = true;
+      this.currentUser = current;
+      this._saveCurrentUser();
       return true;
     } catch (err: any) {
       console.warn('Popup failed for Google login, falling back to redirect', err?.code || err);
@@ -233,6 +251,8 @@ export class Auth {
    */
   logout(): void {
     this._authenticated = false;
+    this.currentUser = null;
+    this._saveCurrentUser();
     // Aquí podrías limpiar tokens en storage, etc.
   }
 
@@ -243,12 +263,50 @@ export class Auth {
     return this._authenticated;
   }
 
+  /**
+   * Obtiene el usuario actual.
+   */
+  getCurrentUser(): UserRecord | null {
+    return this.currentUser;
+  }
+
+  /**
+   * Actualiza el usuario actual.
+   */
+  updateCurrentUser(data: Partial<UserRecord>) {
+    if (this.currentUser) {
+      Object.assign(this.currentUser, data);
+      this._saveCurrentUser();
+    }
+  }
+
   private _loadUsers(): UserRecord[] {
     try {
       const raw = localStorage.getItem(this.STORAGE_KEY);
       return raw ? JSON.parse(raw) as UserRecord[] : [];
     } catch (err) {
       return [];
+    }
+  }
+
+  private _loadCurrentUser() {
+    try {
+      const raw = localStorage.getItem(this.CURRENT_USER_KEY);
+      if (raw) {
+        this.currentUser = JSON.parse(raw) as UserRecord;
+        this._authenticated = true; // Assume authenticated if currentUser exists
+      }
+    } catch (err) {
+      this.currentUser = null;
+      this._authenticated = false;
+    }
+  }
+
+  private _saveCurrentUser() {
+    if (this.currentUser) {
+      localStorage.setItem(this.CURRENT_USER_KEY, JSON.stringify(this.currentUser));
+    } else {
+      localStorage.removeItem(this.CURRENT_USER_KEY);
     }
   }
 }

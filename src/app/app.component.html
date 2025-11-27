@@ -1,3 +1,32 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu side="start" menuId="main-menu" contentId="main-content" autoHide="true">
+    <ion-header>
+      <ion-toolbar class="farm-toolbar">
+        <ion-title>🐄 Finca Gadera - Lechera</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+        <ion-menu-toggle auto-hide="true">
+          <ion-button expand="block" (click)="navigateToHome(); closeMenu()">Inicio</ion-button>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="true">
+          <ion-button expand="block" (click)="navigateToProfile(); closeMenu()">Editar Perfil</ion-button>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="true">
+          <ion-button expand="block" (click)="navigateToCowRegister(); closeMenu()">Registrar Vaca</ion-button>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="true">
+          <ion-button expand="block" (click)="navigateToCowList(); closeMenu()">Lista de Vacas</ion-button>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="true">
+          <ion-button expand="block" (click)="navigateToHealthHistory(); closeMenu()">Historial de Salud</ion-button>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="true">
+          <ion-button expand="block" color="danger" (click)="logout(); closeMenu()">Cerrar Sesión</ion-button>
+        </ion-menu-toggle>
+    </ion-content>
+  </ion-menu>
+  <ion-content id="main-content" class="ion-page farm-background">
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
 </ion-app>

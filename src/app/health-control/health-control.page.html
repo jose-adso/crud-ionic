@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Control de Salud - {{ cow?.cowName }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-toolbar>
+        <ion-title size="large">Control de Salud</ion-title>
+        <ion-buttons slot="start">
+          <ion-button (click)="goBack()">Volver</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="container" *ngIf="cow">
+    <div class="card">
+      <div class="card-body">
+        <h4>Historial Médico de {{ cow.cowName }}</h4>
+
+        <div *ngIf="healthHistory.length === 0">
+          <p>No hay registros médicos.</p>
+        </div>
+
+        <div *ngFor="let record of healthHistory" class="record-item">
+          <h5>{{ record.date }} - {{ record.type }}</h5>
+          <p>{{ record.description }}</p>
+          <p *ngIf="record.details">{{ record.details }}</p>
+        </div>
+
+        <hr>
+
+        <h4>Agregar Nuevo Registro</h4>
+        <ion-item>
+          <ion-label position="stacked">Fecha</ion-label>
+          <ion-input type="date" [(ngModel)]="newHealthDate"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Tipo</ion-label>
+          <ion-select [(ngModel)]="newHealthType">
+            <ion-select-option value="visita_veterinario">Visita Veterinario</ion-select-option>
+            <ion-select-option value="vacunacion">Vacunación</ion-select-option>
+            <ion-select-option value="tratamiento">Tratamiento</ion-select-option>
+            <ion-select-option value="otro">Otro</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Descripción</ion-label>
+          <ion-input [(ngModel)]="newHealthDescription" placeholder="Descripción"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Detalles (Opcional)</ion-label>
+          <ion-textarea [(ngModel)]="newHealthDetails" placeholder="Detalles adicionales"></ion-textarea>
+        </ion-item>
+        <button class="btn btn-primary" (click)="addHealthRecord()">Agregar Registro</button>
+      </div>
+    </div>
+  </div>
+</ion-content>

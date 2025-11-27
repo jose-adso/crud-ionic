@@ -1,0 +1,37 @@
+<div class="ion-page" id="cow-list-content">
+  <ion-header>
+    <ion-toolbar class="farm-toolbar">
+      <ion-title>Lista de Vacas</ion-title>
+      <ion-buttons slot="end">
+        <ion-menu-button menu="main-menu"></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding farm-background">
+    
+    <div class="list-group">
+      <div class="list-group-item" *ngFor="let cow of cows">
+        <h5>{{ cow.cowName || 'Sin nombre' }} ({{ cow.registrationNumber || 'Sin registro' }})</h5>
+        <p>Raza: {{ cow.breed || 'N/A' }}</p>
+        <p>Fecha de compra: {{ cow.purchaseDate || 'N/A' }}</p>
+        <p>Estado: {{ cow.status }}</p>
+        <p>Día inseminación: {{ cow.inseminationDay || 'N/A' }}</p>
+        <p>Día cría: {{ cow.birthDay || 'N/A' }}</p>
+        <p>Raza inseminación: {{ cow.inseminationBreed || 'N/A' }}</p>
+        <p>Sexo cría: {{ cow.calfSex }}</p>
+        <div *ngIf="cow.cowPhoto">
+          <img class="cow-avatar" [src]="cow.cowPhoto" alt="Foto vaca">
+        </div>
+        <div *ngIf="cow.calfPhoto">
+          <img class="cow-avatar" [src]="cow.calfPhoto" alt="Foto ternero">
+        </div>
+        <p>Fecha venta: {{ cow.saleDate || 'N/A' }}</p>
+        <p>Historial médico: {{ (cow.healthHistory?.length || 0) }} registros</p>
+        <button class="btn btn-primary btn-sm me-2" (click)="editCow(cow)">Editar</button>
+        <button class="btn btn-secondary btn-sm me-2" (click)="viewHealth(cow)">Historial</button>
+        <button class="btn btn-danger btn-sm" (click)="deleteCow(cow.id)">Eliminar</button>
+      </div>
+    </div>
+    <p *ngIf="cows.length === 0">No hay vacas registradas.</p>
+  </ion-content>
+</div>
